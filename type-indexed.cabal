@@ -1,4 +1,3 @@
-
 name:                type-indexed
 version:             0.1.0.0
 -- synopsis:
@@ -15,9 +14,13 @@ extra-source-files:  README.md
 cabal-version:       >=1.10
 
 library
-  hs-source-dirs:      src
-  exposed-modules:     Data.TypeIndexed.HeteroMap
+  hs-source-dirs: src
+  exposed-modules:
+    Data.TypeIndexed.HeteroMap
+    Data.TypeIndexed.HomoMap
+    Data.TypeIndexed.HomoMap.Internal
   build-depends:       base >= 4.7 && < 5
+                     , containers
   default-language:    Haskell2010
   default-extensions:  NoImplicitPrelude
   ghc-options:
