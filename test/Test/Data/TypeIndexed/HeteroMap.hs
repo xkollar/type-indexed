@@ -4,6 +4,8 @@
 {-# LANGUAGE TypeApplications #-}
 module Test.Data.TypeIndexed.HeteroMap (tests) where
 
+import Prelude (succ)
+
 import Data.Bool (Bool(True))
 import Data.Function (($), (.))
 import Data.Functor ((<$>))
@@ -27,7 +29,7 @@ tests = testGroup $(LitE . StringL . loc_module <$> location)
     [ testCase "Compiles 1"
         $ get (Proxy @"a") example1 @?= ()
     , testCase "Update"
-        $ get (Proxy @"b") (update (Proxy @"b") 5 example1) @?= 5
+        $ get (Proxy @"b") (update (Proxy @"b") succ example1) @?= 2
     , testCase "Access combined"
         $ test example2 @?= "1True"
     , testCase "Show"

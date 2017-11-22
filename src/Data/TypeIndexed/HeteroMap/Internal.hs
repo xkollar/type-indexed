@@ -55,16 +55,16 @@ cons _ = C
 
 class Has (l :: k1) (t :: *) (s :: [*]) | l s -> t where
     get :: proxy l -> M s -> t
-    update :: proxy l -> t -> M s -> M s
+    update :: proxy l -> (t -> t) -> M s -> M s
 
 instance {-# OVERLAPPABLE #-} Has l t s => Has l t (T l' t' ': s) where
     get p (C _ s) = get p s
     {-# INLINE get #-}
-    update p v (C a s) = C a (update p v s)
+    update p f (C a s) = C a (update p f s)
     {-# INLINE update #-}
 
 instance Has l t (T l t ': s) where
     get _ (C x _) = x
     {-# INLINE get #-}
-    update _ v (C _ s) = C v s
+    update _ f (C v s) = C (f v) s
     {-# INLINE update #-}
