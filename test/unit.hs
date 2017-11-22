@@ -5,11 +5,13 @@ import System.IO (IO)
 
 import Test.Tasty (TestTree, defaultMain, testGroup)
 
+import qualified Test.Data.TypeIndexed.HeteroMap (tests)
+
 
 main :: IO ()
 main = defaultMain tests
 
 tests :: TestTree
 tests = testGroup "Tests"
-    [ -- Tests.Lib.tests
+    [ Test.Data.TypeIndexed.HeteroMap.tests
     ]
