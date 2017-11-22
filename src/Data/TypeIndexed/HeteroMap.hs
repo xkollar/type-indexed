@@ -66,9 +66,3 @@ instance Has l t (T l t ': s) where
     {-# INLINE get #-}
     update _ v (C _ s) = C v s
     {-# INLINE update #-}
-
--- example = get (Proxy @"a") (C () $ C 1 E :: X '["a", "b"] '[(), Int]) :: ()
--- get (Proxy @"lol") . update (Proxy @"lol") 5 . cons (Proxy @"lol") (1::Int) $ cons (Proxy @"test") () empty
-
--- test :: (Has "test1" Int ls ts, Has "test2" Bool ls ts) => X ls ts -> String
--- test m = show (get (Proxy @"test1") m) <> show (get (Proxy @"test2") m)
