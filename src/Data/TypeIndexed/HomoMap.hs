@@ -4,5 +4,5 @@ module Data.TypeIndexed.HomoMap
     )
   where
 
-import Data.TypeIndexed.HomoMap.Internal as Export hiding (M(..))
+import Data.TypeIndexed.HomoMap.Internal as Export hiding (M(..), head, tail)
 import Data.TypeIndexed.HomoMap.Internal as Export (M)
