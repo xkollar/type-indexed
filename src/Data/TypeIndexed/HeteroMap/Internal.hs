@@ -19,7 +19,7 @@ import GHC.TypeLits (KnownSymbol, symbolVal)
 import Text.Show (Show, showsPrec)
 
 -- | Type level tuple (could not use (,) as it expects its params to be of
--- kind '*'.
+-- kind '*').
 data T (a :: k1) (b :: k2)
 
 data M (t::[*]) where
@@ -44,6 +44,7 @@ instance (KnownSymbol l, Show (M s), Show a) => Show (M (T l a : s)) where
         ',' : showsPrec 11 (symbolVal (Proxy @l),v) (showsPrec n r s)
     showsPrec n (C v r) s =
         '[' : showsPrec 11 (symbolVal (Proxy @l),v) (showsPrec n r (',':']':s))
+    {-# INLINE showsPrec #-}
 
 empty :: M '[]
 empty = E

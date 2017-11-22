@@ -13,7 +13,7 @@ module Data.TypeIndexed.HomoMap.Internal
     , cons
     , head
     , tail
-    , Member(..)
+    , Has(..)
     , Tags(..)
     , tagsOfMap
     , collect
@@ -58,19 +58,19 @@ tail (M (_:s)) = M s
 tail (M _) = error "tail: impossible happened"
 {-# INLINE tail #-}
 
-class Member (t :: k) (s :: [k]) where
+class Has (t :: k) (s :: [k]) where
     get :: proxy t -> M s a -> a
-    update :: proxy t -> a -> M s a -> M s a
+    update :: proxy t -> (a -> a) -> M s a -> M s a
 
-instance Member t (t ': s) where
+instance Has t (t ': s) where
     get _ (M (x:_)) = x
     get _ _ = error "get: impossible happened"
     {-# INLINE get #-}
-    update _ v (M (_:s)) = M (v:s)
+    update _ f (M (v:s)) = M (f v:s)
     update _ _ (M _) = error "update: impossible happened"
     {-# INLINE update #-}
 
-instance {-# OVERLAPPABLE #-} Member t s => Member t (t' ': s) where
+instance {-# OVERLAPPABLE #-} Has t s => Has t (t' ': s) where
     get p = get p . tail
     {-# INLINE get #-}
     update p v s = cons Proxy (head s) (update p v (tail s))
