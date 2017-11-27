@@ -18,6 +18,7 @@ import Data.Semigroup ((<>))
 import GHC.TypeLits (KnownSymbol, symbolVal)
 import Text.Show (Show, showsPrec)
 
+
 -- | Type level tuple (could not use (,) as it expects its params to be of
 -- kind '*').
 data T (a :: k1) (b :: k2)
