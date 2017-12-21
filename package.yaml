@@ -1,0 +1,62 @@
+name: type-indexed
+version: '0.1.0.0'
+category: Web
+author: Matej Kollar
+maintainer: 208115@mail.muni.cz
+copyright: 2017 Matej Kollar
+license: BSD3
+homepage: https://github.com/xkollar/type-indexed#readme
+extra-source-files:
+- README.md
+ghc-options:
+- -Wall
+- -Wsemigroup
+- -fwarn-tabs
+- -fwarn-missing-import-lists
+- -fwarn-implicit-prelude
+default-extensions:
+- NoImplicitPrelude
+library:
+  source-dirs: src
+  dependencies:
+  - base >=4.7 && <5
+  - containers
+  - template-haskell
+tests:
+  hlint:
+    main: hlint.hs
+    source-dirs: test
+    ghc-options:
+    - -threaded
+    - ! '"-with-rtsopts=-N -K1K"'
+    dependencies:
+    - base >=4.7 && <5
+    - hlint
+  unit:
+    main: unit.hs
+    source-dirs: test
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - ! '"-with-rtsopts=-N -K1K"'
+    dependencies:
+    - base
+    - type-indexed
+    - template-haskell
+    - tasty
+    - tasty-hunit
+benchmarks:
+  benchmarks:
+    main: bench.hs
+    source-dirs: test
+    ghc-options:
+    - -rtsopts
+    - -with-rtsopts=-K1K
+    - -O2
+    dependencies:
+    - base
+    - type-indexed
+    - containers
+    - dimensional
+    - template-haskell
+    - criterion

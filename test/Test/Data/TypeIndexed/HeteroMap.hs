@@ -1,6 +1,7 @@
-{-# LANGUAGE TemplateHaskell #-}
-{-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE DataKinds #-}
+{-# LANGUAGE FlexibleContexts #-}
+{-# LANGUAGE QuasiQuotes #-}
+{-# LANGUAGE TemplateHaskell #-}
 {-# LANGUAGE TypeApplications #-}
 module Test.Data.TypeIndexed.HeteroMap (tests) where
 
@@ -22,6 +23,7 @@ import Test.Tasty.HUnit ((@?=), testCase)
 
 import Data.TypeIndexed.HeteroMap
        (Has, M, T, empty, get, insert, update)
+import Data.TypeIndexed.QQ (k)
 
 
 tests :: TestTree
@@ -41,10 +43,10 @@ tests = testGroup $(LitE . StringL . loc_module <$> location)
     ]
 
 example1 :: M '[T "a" (),T "b" Int]
-example1 = insert (Proxy @"a") () $ insert (Proxy @"b") 1 empty
+example1 = insert [k|a|] () $ insert [k|b|] 1 empty
 
 example2 :: M '[T "key2" Bool, T "key1" Int]
-example2 = insert (Proxy @"key2") True $ insert (Proxy @"key1") 1 empty
+example2 = insert [k|key2|] True $ insert [k|key1|] 1 empty
 
 test :: (Has "key1" Int s, Has "key2" Bool s) => M s -> String
-test m = show (get (Proxy @"key1") m) <> show (get (Proxy @"key2") m)
+test m = show (get [k|key1|] m) <> show (get [k|key2|] m)
