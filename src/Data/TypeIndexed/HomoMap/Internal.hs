@@ -10,7 +10,7 @@
 module Data.TypeIndexed.HomoMap.Internal
     ( M(..)
     , empty
-    , cons
+    , insert
     , head
     , tail
     , Has(..)
@@ -44,9 +44,9 @@ empty :: M '[] a
 empty = M []
 {-# INLINE empty #-}
 
-cons :: proxy t -> a -> M ts a -> M (t ': ts) a
-cons _ x (M s) = M (x:s)
-{-# INLINE cons #-}
+insert :: proxy t -> a -> M ts a -> M (t ': ts) a
+insert _ x (M s) = M (x:s)
+{-# INLINE insert #-}
 
 head :: M (t:ts) a -> a
 head (M (x:_)) = x
@@ -73,7 +73,7 @@ instance Has t (t ': s) where
 instance {-# OVERLAPPABLE #-} Has t s => Has t (t' ': s) where
     get p = get p . tail
     {-# INLINE get #-}
-    update p v s = cons Proxy (head s) (update p v (tail s))
+    update p v s = insert Proxy (head s) (update p v (tail s))
     {-# INLINE update #-}
 
 class Tags (ts :: [k]) where

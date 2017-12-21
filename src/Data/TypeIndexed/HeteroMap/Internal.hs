@@ -51,9 +51,9 @@ empty :: M '[]
 empty = E
 {-# INLINE empty #-}
 
-cons :: proxy l -> a -> M s -> M (T l a : s)
-cons _ = C
-{-# INLINE cons #-}
+insert :: proxy l -> a -> M s -> M (T l a : s)
+insert _ = C
+{-# INLINE insert #-}
 
 class Has (l :: k1) (t :: *) (s :: [*]) | l s -> t where
     get :: proxy l -> M s -> t

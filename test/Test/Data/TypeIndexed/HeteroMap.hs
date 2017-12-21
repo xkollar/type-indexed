@@ -21,7 +21,7 @@ import Test.Tasty (TestTree, testGroup)
 import Test.Tasty.HUnit ((@?=), testCase)
 
 import Data.TypeIndexed.HeteroMap
-       (Has, M, T, cons, empty, get, update)
+       (Has, M, T, empty, get, insert, update)
 
 
 tests :: TestTree
@@ -41,10 +41,10 @@ tests = testGroup $(LitE . StringL . loc_module <$> location)
     ]
 
 example1 :: M '[T "a" (),T "b" Int]
-example1 = cons (Proxy @"a") () $ cons (Proxy @"b") 1 empty
+example1 = insert (Proxy @"a") () $ insert (Proxy @"b") 1 empty
 
 example2 :: M '[T "key2" Bool, T "key1" Int]
-example2 = cons (Proxy @"key2") True $ cons (Proxy @"key1") 1 empty
+example2 = insert (Proxy @"key2") True $ insert (Proxy @"key1") 1 empty
 
 test :: (Has "key1" Int s, Has "key2" Bool s) => M s -> String
 test m = show (get (Proxy @"key1") m) <> show (get (Proxy @"key2") m)
